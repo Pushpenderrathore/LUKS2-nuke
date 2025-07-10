@@ -1,0 +1,7 @@
+run_hook() {
+     echo "[failwipe_encrypt] Trying to unlock encrypted volume..."
+     if ! cryptsetup open --type luks /dev/sda3 r00t; then
+         echo "[failwipe_encrypt] Wrong password. Setting fail flag."
+         touch /run/failwipe_luks_failed
+     fi
+ }

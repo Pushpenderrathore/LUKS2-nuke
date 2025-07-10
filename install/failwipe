@@ -1,0 +1,4 @@
+build() {
+    add_file "/boot/failcount"
+    add_runscript
+}

@@ -1,0 +1,25 @@
+run_hook() {
+     FAILCOUNT_FILE="/boot/failcount"
+     MAX_FAILS=5
+     DRIVE="/dev/sda"  # ⚠️ Replace with your full drive (e.g., /dev/nvme0n1)
+
+     # Make sure the failcount file exists
+     [ ! -f "$FAILCOUNT_FILE" ] && echo 0 > "$FAILCOUNT_FILE"
+     
+     TMP_FLAG="/run/failwipe_luks_failed"
+
+     # If LUKS failed last boot, increment counter
+     if [ -f "$TMP_FLAG" ]; then
+         COUNT=$(cat "$FAILCOUNT_FILE")
+         COUNT=$((COUNT + 1))
+         echo "$COUNT" > "$FAILCOUNT_FILE"
+         echo "[failwipe] Failed attempts: $COUNT/$MAX_FAILS"
+
+         if [ "$COUNT" -ge "$MAX_FAILS" ]; then
+             echo "[failwipe] Max failures reached. Wiping disk..."
+             shred -n 1 -v "$DRIVE"
+         fi
+
+         rm -f "$TMP_FLAG"
+     fi
+ }
