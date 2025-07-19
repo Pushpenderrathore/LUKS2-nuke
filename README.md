@@ -7,7 +7,9 @@
 
 **LUKS2-Nuke** is a security-focused enhancement for systems using LUKS2 disk encryption. This script automatically **modifies sensitive data** and **securely wipes the encrypted partition** after **five consecutive failed decryption attempts**, offering an extra layer of protection in case of brute-force attacks or unauthorized access attempts. 
 
-> ⚠️ **Warning**: There is no way to recover your data after 5 incorrect password attempts. Use with extreme caution. **No backups. No recovery.** 
+> ⚠️ **Warning**: There is no way to recover your data after 5 incorrect password attempts. Use with extreme caution. **No backups. No recovery. Nuke means nuke** 
+
+> ⚠️ **Warning**: Even top-tier intelligence agencies like the FBI and CIA, with billion-dollar budgets, cannot recover your data without your cooperation. Once the wipe is triggered, your data is permanently destroyed — no backdoors, no recovery.
 
 --- 
 
