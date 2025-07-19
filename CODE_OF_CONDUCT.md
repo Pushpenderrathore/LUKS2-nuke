@@ -72,6 +72,13 @@ This Code of Conduct is adapted from:
 
 --- 
 
+## 🔗 References
+
+- [LUKS2 Documentation](https://gitlab.com/cryptsetup/cryptsetup)
+- [cryptsetup Hooks Manual Page](https://man7.org/linux/man-pages/man8/cryptsetup.8.html)
+
+---
+
 ## 🛡️ Final Note 
 
 This is a cybersecurity project. Use it **legally**, **ethically**, and **responsibly**. 
