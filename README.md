@@ -1,7 +1,7 @@
 # 🔐 LUKS2-Nuke: Auto-Wipe After 5 Failed Attempts 
 
 ![License](https://img.shields.io/badge/license-MIT-green) 
-![Last Commit](https://img.shields.io/github/last-commit/your-username/LUKS2-nuke) 
+![Last Commit](https://img.shields.io/github/last-commit/Pushpenderrathore/LUKS2-nuke) 
 
 ## Overview 
 
