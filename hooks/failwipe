@@ -1,5 +1,6 @@
 run_hook() {
      FAILCOUNT_FILE="/boot/failcount"
+     LOG_FILE="/boot/failwipe_log"
      MAX_FAILS=5
      DRIVE="/dev/sda"  # ⚠️ Replace with your full drive (e.g., /dev/nvme0n1)
 
@@ -13,11 +14,11 @@ run_hook() {
          COUNT=$(cat "$FAILCOUNT_FILE")
          COUNT=$((COUNT + 1))
          echo "$COUNT" > "$FAILCOUNT_FILE"
-         echo "[failwipe] Failed attempts: $COUNT/$MAX_FAILS"
+         echo "[failwipe] Failed attempts: $COUNT/$MAX_FAILS" | tee -a "LOG_FILE"
 
          if [ "$COUNT" -ge "$MAX_FAILS" ]; then
-             echo "[failwipe] Max failures reached. Wiping disk..."
-             shred -n 1 -v "$DRIVE"
+             echo "[failwipe] Max failures reached. Wiping disk..." | tee -a "$LOG_FILE"
+             shred -n 1 -v "$DRIVE" | tee -a "$LOG_FILE"
          fi
 
          rm -f "$TMP_FLAG"
