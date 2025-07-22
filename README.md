@@ -2,6 +2,7 @@
 
 ![License](https://img.shields.io/badge/license-MIT-green) 
 ![Last Commit](https://img.shields.io/github/last-commit/Pushpenderrathore/LUKS2-nuke) 
+![Repo Size](https://img.shields.io/github/repo-size/Pushpenderrathore/tor-browser)
 
 ## Overview 
 
