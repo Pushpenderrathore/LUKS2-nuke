@@ -27,7 +27,6 @@ DEB_SCRIPTS_DIR="/etc/initramfs-tools/scripts/init-bottom"
 
 # Function for Arch-based system
 install_arch() {
-    echo "[install] Setting up for Arch-based system..."
 
     spinner() {
         local pid=$1
@@ -35,15 +34,15 @@ install_arch() {
         local spinstr='|/-\'
         while kill -0 "$pid" 2>/dev/null; do
             for c in / - \\ \|; do
-                printf "\r[install] Setting up for Arch-based system... [%c]" "$c"
+                printf "\r[install] Setting up for Arch-based system [%c]" "$c"
                 sleep $delay
             done
         done
-        printf "\r[install] Setting up for Arch-based system... [✔]\n"
+        printf "\r[install] Setting up for Arch-based system [✔]\n"
     }
     
     # Example long-running task (you can replace this with your actual install command)
-    (sleep 5) &
+    (sleep 10) &
     
     # Get PID of last background task
     spinner $!
@@ -62,9 +61,6 @@ install_arch() {
 
 # Function for Debian-based distros
 install_debian() {
-    echo "[install] Setting up for Debian-based system..."
-
-    #!/bin/bash
 
     spinner() {
         local pid=$1
@@ -72,15 +68,15 @@ install_debian() {
         local spinstr='|/-\'
         while kill -0 "$pid" 2>/dev/null; do
             for c in / - \\ \|; do
-                printf "\r[install] Setting up for Arch-based system... [%c]" "$c"
+                printf "\r[install] Setting up for Debian-based system [%c]" "$c"
                 sleep $delay
             done
         done
-        printf "\r[install] Setting up for Arch-based system... [✔]\n"
+        printf "\r[install] Setting up for Arch-based system [✔]\n"
     }
     
     # Example long-running task (you can replace this with your actual install command)
-    (sleep 5) &
+    (sleep 10) &
     
     # Get PID of last background task
     spinner $!
@@ -112,5 +108,5 @@ fi
 echo
 echo "!!! ⚠️  WARNING: Do not forget your password."
 echo "Entering the wrong password more than five times"
-echo "may trigger a destructive action and result in permanent data loss!"
+echo "trigger a destructive action and result in permanent data loss!"
 echo
