@@ -35,7 +35,7 @@ install_arch() {
 
     sudo chmod +x $ARCH_HOOKS_DIR/failwipe*
     sudo chmod +x $ARCH_SCRIPTS_DIR/failwipe*
-
+    
     sudo mkinitcpio -P
 
     spinner() {
