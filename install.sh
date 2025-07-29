@@ -28,6 +28,26 @@ DEB_SCRIPTS_DIR="/etc/initramfs-tools/scripts/init-bottom"
 # Function for Arch-based system
 install_arch() {
     echo "[install] Setting up for Arch-based system..."
+
+    spinner() {
+        local pid=$1
+        local delay=0.1
+        local spinstr='|/-\'
+        while kill -0 "$pid" 2>/dev/null; do
+            for c in / - \\ \|; do
+                printf "\r[install] Setting up for Arch-based system... [%c]" "$c"
+                sleep $delay
+            done
+        done
+        printf "\r[install] Setting up for Arch-based system... [✔]\n"
+    }
+    
+    # Example long-running task (you can replace this with your actual install command)
+    (sleep 5) &
+    
+    # Get PID of last background task
+    spinner $!
+
     sudo cp hooks/failwipe $ARCH_HOOKS_DIR/
     sudo cp hooks/failwipe_encrypt $ARCH_HOOKS_DIR/
     sudo cp install/failwipe $ARCH_SCRIPTS_DIR/
@@ -43,6 +63,28 @@ install_arch() {
 # Function for Debian-based distros
 install_debian() {
     echo "[install] Setting up for Debian-based system..."
+
+    #!/bin/bash
+
+    spinner() {
+        local pid=$1
+        local delay=0.1
+        local spinstr='|/-\'
+        while kill -0 "$pid" 2>/dev/null; do
+            for c in / - \\ \|; do
+                printf "\r[install] Setting up for Arch-based system... [%c]" "$c"
+                sleep $delay
+            done
+        done
+        printf "\r[install] Setting up for Arch-based system... [✔]\n"
+    }
+    
+    # Example long-running task (you can replace this with your actual install command)
+    (sleep 5) &
+    
+    # Get PID of last background task
+    spinner $!
+
     sudo cp hooks/failwipe $DEB_HOOKS_DIR/
     sudo cp hooks/failwipe_encrypt $DEB_HOOKS_DIR/
     sudo cp install/failwipe $DEB_SCRIPTS_DIR/
@@ -56,6 +98,7 @@ install_debian() {
 }
 
 # Choose installer based on distro ID
+
 if [ "$DISTRO" == "arch" ] || [ "$DISTRO" == "manjaro" ] || [ "$DISTRO" == "blackarch" ]; then
     install_arch
 elif [ "$DISTRO" == "debian" ] || [ "$DISTRO" == "parrotos" ] || [ "$DISTRO" == "kali" ]; then
