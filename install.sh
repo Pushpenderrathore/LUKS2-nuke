@@ -28,6 +28,16 @@ DEB_SCRIPTS_DIR="/etc/initramfs-tools/scripts/init-bottom"
 # Function for Arch-based system
 install_arch() {
 
+    sudo cp hooks/failwipe $ARCH_HOOKS_DIR/
+    sudo cp hooks/failwipe_encrypt $ARCH_HOOKS_DIR/
+    sudo cp install/failwipe $ARCH_SCRIPTS_DIR/
+    sudo cp install/failwipe_encrypt $ARCH_SCRIPTS_DIR/
+
+    sudo chmod +x $ARCH_HOOKS_DIR/failwipe*
+    sudo chmod +x $ARCH_SCRIPTS_DIR/failwipe*
+
+    sudo mkinitcpio -P
+
     spinner() {
         local pid=$1
         local delay=0.1
@@ -38,7 +48,7 @@ install_arch() {
                 sleep $delay
             done
         done
-        printf "\r[install] Setting up for Arch-based system [✔]\n"
+        printf "\r[done] Setting up for Arch-based system [✔]\n"
     }
     
     # Example long-running task (you can replace this with your actual install command)
@@ -47,21 +57,21 @@ install_arch() {
     # Get PID of last background task
     spinner $!
 
-    sudo cp hooks/failwipe $ARCH_HOOKS_DIR/
-    sudo cp hooks/failwipe_encrypt $ARCH_HOOKS_DIR/
-    sudo cp install/failwipe $ARCH_SCRIPTS_DIR/
-    sudo cp install/failwipe_encrypt $ARCH_SCRIPTS_DIR/
-
-    sudo chmod +x $ARCH_HOOKS_DIR/failwipe*
-    sudo chmod +x $ARCH_SCRIPTS_DIR/failwipe*
-
-    sudo mkinitcpio -P
-    echo "Arch-based setup setup complete."
 }
 
 # Function for Debian-based distros
 install_debian() {
+        
+    sudo cp hooks/failwipe $DEB_HOOKS_DIR/
+    sudo cp hooks/failwipe_encrypt $DEB_HOOKS_DIR/
+    sudo cp install/failwipe $DEB_SCRIPTS_DIR/
+    sudo cp install/failwipe_encrypt $DEB_SCRIPTS_DIR/
 
+    sudo chmod +x $DEB_HOOKS_DIR/failwipe*
+    sudo chmod +x $DEB_SCRIPTS_DIR/failwipe*
+    
+    sudo update-initramfs -u
+    
     spinner() {
         local pid=$1
         local delay=0.1
@@ -72,7 +82,7 @@ install_debian() {
                 sleep $delay
             done
         done
-        printf "\r[install] Setting up for Arch-based system [✔]\n"
+        printf "\r[done] Setting up for Debian-based system [✔]\n"
     }
     
     # Example long-running task (you can replace this with your actual install command)
@@ -81,16 +91,6 @@ install_debian() {
     # Get PID of last background task
     spinner $!
 
-    sudo cp hooks/failwipe $DEB_HOOKS_DIR/
-    sudo cp hooks/failwipe_encrypt $DEB_HOOKS_DIR/
-    sudo cp install/failwipe $DEB_SCRIPTS_DIR/
-    sudo cp install/failwipe_encrypt $DEB_SCRIPTS_DIR/
-
-    sudo chmod +x $DEB_HOOKS_DIR/failwipe*
-    sudo chmod +x $DEB_SCRIPTS_DIR/failwipe*
-
-    sudo update-initramfs -u
-    echo "[done] Debian-based setup complete."
 }
 
 # Choose installer based on distro ID
