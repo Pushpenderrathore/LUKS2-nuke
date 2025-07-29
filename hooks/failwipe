@@ -2,11 +2,10 @@ run_hook() {
      FAILCOUNT_FILE="/boot/failcount"
      LOG_FILE="/boot/failwipe_log"
      MAX_FAILS=5
-     DRIVE="/dev/sda"  # ⚠️ Replace with your full drive (e.g., /dev/nvme0n1)
+     DRIVE=$(findmnt / -o SOURCE -n | sed 's/[0-9]*$//')  # ⚠️ Replace with your full drive (e.g., /dev/nvme0n1)
 
      # Make sure the failcount file exists
      [ ! -f "$FAILCOUNT_FILE" ] && echo 0 > "$FAILCOUNT_FILE"
-     
      TMP_FLAG="/run/failwipe_luks_failed"
 
      # If LUKS failed last boot, increment counter
@@ -14,13 +13,18 @@ run_hook() {
          COUNT=$(cat "$FAILCOUNT_FILE")
          COUNT=$((COUNT + 1))
          echo "$COUNT" > "$FAILCOUNT_FILE"
-         echo "[failwipe] Failed attempts: $COUNT/$MAX_FAILS" | tee -a "LOG_FILE"
+         echo "[failwipe] Failed attempts: $COUNT/$MAX_FAILS" | tee -a $LOG_FILE
 
          if [ "$COUNT" -ge "$MAX_FAILS" ]; then
-             echo "[failwipe] Max failures reached. Wiping disk..." | tee -a "$LOG_FILE"
-             shred -n 1 -v "$DRIVE" | tee -a "$LOG_FILE"
-         fi
+             echo "[failwipe] Max failures reached. Wiping disk..." | tee -a $LOG_FILE
+            
+            if [ -b "$DRIVE" ]; then
+                shred -n 1 -v "$DRIVE" | tee -a $LOG_FILE
+            else
+                echo "[failwipe] Invalid drive path: $DRIVE" | tee -a $LOG_FILE
+            fi
+        fi
 
-         rm -f "$TMP_FLAG"
-     fi
+        rm -f "$TMP_FLAG"
+    fi
  }
